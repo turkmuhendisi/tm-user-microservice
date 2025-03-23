@@ -31,6 +31,9 @@ dependencies {
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+	implementation("io.github.openfeign:feign-core")
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.3")
 }
 
 tasks.withType<Test> {
