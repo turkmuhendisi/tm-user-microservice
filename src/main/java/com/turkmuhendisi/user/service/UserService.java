@@ -22,17 +22,20 @@ public class UserService {
     }
 
     public void registerUser(UserRegistrationDto from) {
-        if (userRepository.findByEmail(from.getEmail()).isPresent()) {
-            throw new EmailAlreadyTakenException("Email is already taken");
+        try{
+            if (userRepository.findByEmail(from.getEmail()).isPresent()) {
+                throw new EmailAlreadyTakenException("Email is already taken");
+            }
+
+            User user = new User(
+                    "turkmuhendisi-user",
+                    from.getEmail(),
+                    passwordEncoder.encode(from.getPassword())
+            );
+            userRepository.save(user);
+        } catch (EmailAlreadyTakenException e) {
+            e.printStackTrace();
         }
-
-        User user = new User(
-                "turkmuhendisi-user",
-                from.getEmail(),
-                passwordEncoder.encode(from.getPassword())
-        );
-
-        userRepository.save(user);
     }
 
     public UserResponse getUser(String email) {
